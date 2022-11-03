@@ -5,6 +5,7 @@ import com.example.labs.repo.PostRepo;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Repository
@@ -17,18 +18,15 @@ public class PostRepoImpl implements PostRepo {
     static {
         posts = new ArrayList<>();
 
-        Post post1 = new Post(85, "IoT", "Learn IoT with the best", "Master IoT");
-        Post post2 = new Post(88, "Spring", "Learn Spring with the best", "Master Spring");
-        Post post3 = new Post(91, "Cloud", "Learn Cloud with the best", "Master Cloud");
-        Post post4 = new Post(95, "React", "Learn React with the best", "Master React");
-        Post post5 = new Post(99, "Containerization", "Learn Containerization with the best", "Master Docker");
+        Post[] arrayOfPosts = {
+                new Post(85, "IoT", "Learn IoT with the best", "Master IoT"),
+                new Post(88, "Spring", "Learn Spring with the best", "Master Spring"),
+                new Post(91, "Cloud", "Learn Cloud with the best", "Master Cloud"),
+                new Post(95, "React", "Learn React with the best", "Master React"),
+                new Post(99, "Containerization", "Learn Containerization with the best", "Master Docker")};
 
-        posts.add(post1);
-        posts.add(post2);
-        posts.add(post3);
-        posts.add(post4);
-        posts.add(post5);
 
+        Collections.addAll(posts, arrayOfPosts);
     }
 
 

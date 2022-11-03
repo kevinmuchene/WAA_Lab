@@ -8,36 +8,65 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RequestMapping("api/v1/posts")
+@RequestMapping("api")
 @RestController
 public class PostController {
 
    @Autowired
    PostService postService;
 
-   @GetMapping("/")
+   @GetMapping("/v1/posts")
     public List<PostDto> getPosts() {
         return postService.findAll();
     }
 
+    @GetMapping("/v2/posts")
+    public List<PostDto> getPostsVersion2() {
+        return postService.findAll();
+    }
+
+
+
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("{id}")
+    @GetMapping("/v1/posts/{id}")
     public PostDto getPost(@PathVariable("id") int id) {
        return postService.findById(id);
     }
 
-    @PostMapping
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/v2/posts/{id}")
+    public PostDto getPostVersion2(@PathVariable("id") int id) {
+        return postService.findById(id);
+    }
+
+    @PostMapping("/v1/posts")
     public void save(@RequestBody PostDto postDto) {
        postService.save(postDto);
     }
 
-    @DeleteMapping("/{id}")
+    @PostMapping("/v2/posts")
+    public void saveVersion2(@RequestBody PostDto postDto) {
+        postService.save(postDto);
+    }
+
+    @DeleteMapping("/v1/posts/{id}")
     public void deleteById(@PathVariable("id") int id) {
        postService.deleteById(id);
     }
 
-    @PutMapping("/{id}")
+    @DeleteMapping("/v2/posts/{id}")
+    public void deleteByIdVersion2(@PathVariable("id") int id) {
+        postService.deleteById(id);
+    }
+
+
+    @PutMapping("/v1/posts/{id}")
     public void updateById(@PathVariable("id") int id, @RequestBody PostDto postDto) {
        postService.update(id, postDto);
+    }
+
+    @PutMapping("/v2/posts/{id}")
+    public void updateByIdVersion2(@PathVariable("id") int id, @RequestBody PostDto postDto) {
+        postService.update(id, postDto);
     }
 }
