@@ -16,5 +16,7 @@ public interface PostService {
 
     public void save(PostDto postDto);
 
-    public void update(int id, PostDto postDto);
+//    public void update(int id, PostDto postDto);
+
+
 }
