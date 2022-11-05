@@ -1,6 +1,8 @@
 package com.example.labs.service.impl;
 
+import com.example.labs.domain.Comment;
 import com.example.labs.domain.Post;
+import com.example.labs.domain.dto.response.CommentDto;
 import com.example.labs.domain.dto.response.PostDto;
 import com.example.labs.repo.PostRepo;
 import com.example.labs.service.PostService;
@@ -45,6 +47,16 @@ public class PostServiceImpl implements PostService {
         postRepo.save(modelMapper.map(postDto, Post.class));
     }
 
+    @Override
+    public void saveComments(Integer id, Comment comment) {
+        Post post = postRepo.findById(id).isPresent() ? postRepo.findById(id).get() : null;
+
+        if(post != null) {
+            post.getComments().add(comment);
+        }
+
+        postRepo.save(post);
+    }
 
 
 }
