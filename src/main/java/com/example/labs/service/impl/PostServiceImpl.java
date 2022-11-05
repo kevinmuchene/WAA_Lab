@@ -23,7 +23,7 @@ public class PostServiceImpl implements PostService {
     @Override
     public List<PostDto> findAll() {
         var posts = postRepo.findAll();
-
+//
         return posts
                 .stream()
                 .map(p -> modelMapper.map(p, PostDto.class))
@@ -45,9 +45,6 @@ public class PostServiceImpl implements PostService {
         postRepo.save(modelMapper.map(postDto, Post.class));
     }
 
-    @Override
-    public void update(int id, PostDto postDto) {
-        postRepo.update(id, modelMapper.map(postDto, Post.class));
-    }
+
 
 }
