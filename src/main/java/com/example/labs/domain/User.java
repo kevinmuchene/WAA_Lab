@@ -4,13 +4,22 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
 import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
+@Table(name = "users_table")
 public class User {
-    long id;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    int id;
     String name;
-    List<Post> posts;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn
+    private List<Post> posts;
 }
