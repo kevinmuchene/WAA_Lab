@@ -1,5 +1,6 @@
 package com.example.labs.controller;
 
+import com.example.labs.domain.Comment;
 import com.example.labs.domain.User;
 import com.example.labs.domain.dto.response.PostDto;
 import com.example.labs.service.PostService;
@@ -57,6 +58,11 @@ public class PostController {
     }
 
 
+    @PostMapping("/v1/posts/{post_id}/comments")
+    public void savePostComments(@PathVariable("post_id") Integer post_id, @RequestBody Comment comment) {
 
+       postService.saveComments(post_id, comment);
+
+    }
 
 }
