@@ -1,5 +1,7 @@
 package com.example.labs.service;
 
+import com.example.labs.domain.Post;
+import com.example.labs.domain.User;
 import com.example.labs.domain.dto.response.PostDto;
 import com.example.labs.domain.dto.response.UserDto;
 
@@ -8,11 +10,17 @@ import java.util.List;
 
 public interface UserService {
 
-    public List<UserDto> findAll();
+    List<UserDto> findAll();
 
-    public UserDto findById(int id);
+    UserDto findById(int id);
 
-    public void deleteById(int id);
+    void deleteById(int id);
 
-    public void save(UserDto Userdto);
+    void save(UserDto Userdto);
+
+    void addPost(Integer user_id, Post post);
+
+    List<Post> getPosts(Integer user_id);
+
+    List<User> getUsersWithMoreThanOnePost();
 }
