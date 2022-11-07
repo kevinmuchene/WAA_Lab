@@ -1,6 +1,7 @@
 package com.example.labs.controller;
 
 import com.example.labs.domain.Comment;
+import com.example.labs.domain.Post;
 import com.example.labs.domain.User;
 import com.example.labs.domain.dto.response.PostDto;
 import com.example.labs.service.PostService;
@@ -63,6 +64,16 @@ public class PostController {
 
        postService.saveComments(post_id, comment);
 
+    }
+
+    @GetMapping("/v1/usersnpost/{id}/posts")
+    public List<User> withMoreThanNPosts(@PathVariable("id") int id) {
+       return postService.getUsersWithMoreThanNPosts(id);
+    }
+
+    @GetMapping("/v1/postmatchingtitles/{title}")
+    public List<Post> postMatchingTitle(@PathVariable("title") String title) {
+       return postService.getPostMatchingTitle(title);
     }
 
 }
