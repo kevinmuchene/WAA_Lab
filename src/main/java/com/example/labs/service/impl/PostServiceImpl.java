@@ -2,6 +2,7 @@ package com.example.labs.service.impl;
 
 import com.example.labs.domain.Comment;
 import com.example.labs.domain.Post;
+import com.example.labs.domain.User;
 import com.example.labs.domain.dto.response.CommentDto;
 import com.example.labs.domain.dto.response.PostDto;
 import com.example.labs.repo.PostRepo;
@@ -56,6 +57,16 @@ public class PostServiceImpl implements PostService {
         }
 
         postRepo.save(post);
+    }
+
+    @Override
+    public List<User> getUsersWithMoreThanNPosts(int n) {
+        return postRepo.userWithMoreThanNPost(n);
+    }
+
+    @Override
+    public List<Post> getPostMatchingTitle(String title) {
+        return postRepo.getPostByTitleMatches(title);
     }
 
 
