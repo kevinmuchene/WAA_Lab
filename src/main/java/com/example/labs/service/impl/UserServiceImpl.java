@@ -1,5 +1,6 @@
 package com.example.labs.service.impl;
 
+import com.example.labs.aspect.ExecutionTime;
 import com.example.labs.domain.Post;
 import com.example.labs.domain.User;
 import com.example.labs.domain.dto.response.UserDto;
@@ -32,6 +33,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @ExecutionTime
     public UserDto findById(int id) {
         return modelMapper.map(userRepo.findById(id), UserDto.class);
     }
@@ -61,6 +63,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    //Use query here
     public List<User> getUsersWithMoreThanOnePost() {
         return userRepo.findAll().stream().filter(post -> post.getPosts().size() > 1).collect(Collectors.toList());
     }
