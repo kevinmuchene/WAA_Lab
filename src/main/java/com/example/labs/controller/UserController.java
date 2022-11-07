@@ -33,7 +33,7 @@ public class UserController {
         userService.save(userDto);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/v1/users/{id}")
     public void deleteById(@PathVariable("id") int id) {
         userService.deleteById(id);
     }
