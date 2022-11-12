@@ -15,11 +15,19 @@ import java.util.List;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
-    String name;
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    private String email;
+    private String userName;
+    private String password;
+    private String firstName;
+    private String lastName;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn
     private List<Post> posts;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable
+    private List<Role> roles;
 }

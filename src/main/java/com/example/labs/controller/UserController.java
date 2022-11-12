@@ -1,7 +1,9 @@
 package com.example.labs.controller;
 
 import com.example.labs.domain.Post;
+import com.example.labs.domain.Role;
 import com.example.labs.domain.User;
+import com.example.labs.domain.dto.request.AuthRequest;
 import com.example.labs.domain.dto.response.UserDto;
 import com.example.labs.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,16 @@ public class UserController {
     @Autowired
     UserService userService;
 
+
+    @GetMapping("/v1/users/admin") //TODO
+    public String welcomeAdmin() {
+        return "Welcome Admin";
+    }
+    @PostMapping("/v1/authenticate")
+    public String generateToken(@RequestBody AuthRequest authRequest) throws Exception {
+       return userService.generateToken(authRequest);
+    }
+
     @GetMapping("/v1/users")
     public List<UserDto> getUsers() {
         return userService.findAll();
@@ -29,8 +41,8 @@ public class UserController {
     }
 
     @PostMapping("/v1/users")
-    public void save(@RequestBody UserDto userDto) {
-        userService.save(userDto);
+    public void save(@RequestBody User user) {
+        userService.save(user);
     }
 
     @DeleteMapping("/v1/users/{id}")
@@ -51,5 +63,12 @@ public class UserController {
     @GetMapping("/v1/postsMoreThanOne")
     public List<User> withMoreThanOnePost(){
         return userService.getUsersWithMoreThanOnePost();
+    }
+
+    @PostMapping("/v1/users/{user_id}/roles")
+    public void addRole(@PathVariable("user_id") Integer user_id, @RequestBody Role role){
+
+        userService.saveUserRole(user_id, role);
+
     }
 }

@@ -2,12 +2,17 @@ package com.example.labs.service.impl;
 
 import com.example.labs.aspect.ExecutionTime;
 import com.example.labs.domain.Post;
+import com.example.labs.domain.Role;
 import com.example.labs.domain.User;
+import com.example.labs.domain.dto.request.AuthRequest;
 import com.example.labs.domain.dto.response.UserDto;
 import com.example.labs.repo.UserRepo;
 import com.example.labs.service.UserService;
+import com.example.labs.util.JwtUtil;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,8 +24,15 @@ public class UserServiceImpl implements UserService {
     @Autowired
     UserRepo userRepo;
 
+
     @Autowired
     ModelMapper modelMapper;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private JwtUtil jwtUtil;
 
     @Override
     public List<UserDto> findAll() {
@@ -44,8 +56,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void save(UserDto userdto) {
-        userRepo.save(modelMapper.map(userdto, User.class));
+    public void save(User user) {
+        userRepo.save(user);
     }
 
     @Override
@@ -66,6 +78,43 @@ public class UserServiceImpl implements UserService {
     //Use query here
     public List<User> getUsersWithMoreThanOnePost() {
         return userRepo.findAll().stream().filter(post -> post.getPosts().size() > 1).collect(Collectors.toList());
+    }
+
+    @Override
+    public String generateToken(AuthRequest authRequest) throws Exception {
+        try{
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(authRequest.getUserName(), authRequest.getPassword())
+            );
+        } catch(Exception ex){
+            throw new Exception("invalid username/password");
+        }
+
+        return jwtUtil.generateToken(authRequest.getUserName());
+    }
+
+    @Override
+    public void saveUserRole(Integer user_id, Role role) {
+        if(user_id == null || role == null) {
+            return;
+        }
+
+//        findById(user_id).getListOfRoles().add(role);
+
+        var user = userRepo.findById(user_id).get();
+
+
+        user.getRoles().add(role);
+
+        System.out.println(listOfUsers().toString());
+
+//            save(user);
+
+
+    }
+
+    public List<User> listOfUsers() {
+        return userRepo.findAll();
     }
 
 
