@@ -10,6 +10,7 @@ import java.util.List;
 
 @RequestMapping("api")
 @RestController
+@CrossOrigin(origins = "*")
 public class PostController {
 
    @Autowired
